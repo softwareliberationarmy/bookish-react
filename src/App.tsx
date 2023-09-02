@@ -1,18 +1,34 @@
+import React, { useEffect, useState } from 'react';
 import  Typography  from '@mui/material/Typography';
-import BookList from './BookList';
 
+import axios from 'axios';
+
+import BookList from './BookList';
+import {Book} from './types';
+import { log } from 'console';
 
 function App() {
 
-  const books = [{ name: 'Refactoring'}, { name: 'Domain-driven design'}];
+  const [books, setBooks] = useState<Book[]>([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/books')
+    .then(res => {
+      console.log(res);
+      setBooks(res.data);
+    })
+    .catch(err => {
+      console.log(err);      
+    });
+  }, []);
 
   return (
-    <>
+    <div>
     <Typography variant='h2' component='h2' data-test='heading'>
       Bookish
     </Typography>
     <BookList books={books} />
-    </>
+    </div>
   );
 }
 
