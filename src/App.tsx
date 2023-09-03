@@ -14,7 +14,6 @@ function App() {
   useEffect(() => {
     axios.get('http://localhost:8080/books')
     .then(res => {
-      console.log(res);
       setBooks(res.data);
     })
     .catch(err => {
